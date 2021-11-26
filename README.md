@@ -20,6 +20,7 @@ Run npm install
 `$ npm install`
 
 Then to generate a pair of public and private key
+
 `$ node generateKeyPair.js`
 
 Make .env file that contains
@@ -27,9 +28,11 @@ Make .env file that contains
 - PORT=
 
 Start nodemon server:
+
 `$ npm run server`
 
 Now you can visit the api docs at:
+
 localhost:PORT/api/docs
 
 
