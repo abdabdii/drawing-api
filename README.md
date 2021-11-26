@@ -35,6 +35,9 @@ Now you can visit the api docs at:
 
 localhost:PORT/api/docs
 
+Or visit it live at
+
+[Drawing API](https://drawing-api-project.herokuapp.com/api/docs "Drawing API")
 
 &copy; Abdalrashid 2021
 
