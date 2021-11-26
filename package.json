@@ -1,5 +1,5 @@
 {
-  "name": "bloglist",
+  "name": "drawing-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -23,5 +23,12 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
+  },
+  "keywords": [
+    "example",
+    "heroku"
+  ],
+  "engines": {
+    "node": "16.x"
   }
 }
