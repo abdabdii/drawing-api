@@ -209,7 +209,7 @@ usersRouter.get('/:id', async (req, res) => {
  *                          {"error":"Invalid Token"}
  */
 usersRouter.put('/:id', Authenticate , async (req, res) => {
-    const userId= response.locals.user.toString()
+    const userId= res.locals.user.toString()
     const body = req.body
     const user = await User.findById({_id:userId})
 
