@@ -26,7 +26,7 @@ mongoose.connect(config.MONGODB_URI)
 
 
 app.use(cors())
-app.use(express.json({limit: '10mb'}))
+app.use(express.json({limit: '10MB'}))
 app.use(middleware.requestLogger)
 app.use('/api/drawings',drawingsRouter)
 app.use('/api/login' , loginRouter)
