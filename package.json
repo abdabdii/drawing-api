@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon index.js",
-    "start": "node index.js"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
+    "lint": "./node_modules/.bin/eslint"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +23,11 @@
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
     "nodemon": "^2.0.12"
   },
   "keywords": [

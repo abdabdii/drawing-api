@@ -1,7 +1,8 @@
-const usersRouter = require('express').Router()
-const bcrypt = require('bcrypt')
-const User = require('../models/user')
-const { Authenticate } = require('../utils/auth')
+/* eslint-disable max-len */
+const usersRouter = require('express').Router();
+const bcrypt = require('bcrypt');
+const User = require('../models/user');
+const { Authenticate } = require('../utils/auth');
 
 /**
  * @swagger
@@ -41,8 +42,8 @@ const { Authenticate } = require('../utils/auth')
  *          example:
  *              id: 6199a14c96fa7d310566bfe7
  *              title: my first drawing
- *              drawing: 6199a14c96fa7d310566bfe76199a14c96fa7d310566bfe76199a14c96fa7d310566bfe76199a14c96fa7d310566bfe7
- *              likes: ['6199a14c96fa7d310566bfe7','6199a14c96fa7d310566bfe7','6199a14c96fa7d310566bfe7']
+ *              drawing: 6199a14c96fa7d310566bfe76199a14c96fa7d310566bfe76199a14c
+ *              likes: ['6199a14c96fa7d310566bfe7','6199a14c96fa7d310566bfe7']
  *      User:
  *          type: object
  *          required:
@@ -57,7 +58,11 @@ const { Authenticate } = require('../utils/auth')
  *                  description: username of the user that is used to login
  *              name:
  *                  type: string
- *                  description: the displaying name of the user 
+ *                  description: the displaying name of the user
+ *              drawings:
+ *                   type: array
+ *                   items:
+ *                      $ref: "#/components/schemas/Drawing"
  *              liked:
  *                  type: array
  *                  items:
@@ -68,18 +73,16 @@ const { Authenticate } = require('../utils/auth')
  *              username: testuser123
  *              name: Test User
  *              liked: ['6199a14c96fa7d310566bfe7','6199a14c96fa7d310566bfe7']
- *              
- * 
- *              
+ *
+ *
+ *
  */
-
 
 /**
  * @swagger
  * security:
  *  - bearerAuth: []
  */
-
 
 /**
  * @swagger
@@ -89,8 +92,6 @@ const { Authenticate } = require('../utils/auth')
  *  - name: Drawings
  *    description: Drawings endpoint
  */
-
-
 
 /**
  * @swagger
@@ -106,19 +107,17 @@ const { Authenticate } = require('../utils/auth')
  *                      schema:
  *                          type: array
  *                          items:
- *                              $ref: '#/components/schemas/User'                       
- *                              
+ *                              $ref: '#/components/schemas/User'
+ *
  */
-usersRouter.get('/',async (req,res) => {
-    //Make request to the database to get all users
-    const users = await User.find({}).populate('drawings').populate('liked')
+usersRouter.get('/', async (req, res) => {
+  // Make request to the database to get all users
+  const users = await User.find({}).populate('drawings');
 
-    //Return the users as json
+  // Return the users as json
 
-    res.json(users)
-
-})
-
+  res.json(users);
+});
 
 /**
  * @swagger
@@ -141,18 +140,17 @@ usersRouter.get('/',async (req,res) => {
  *                          $ref: '#/components/schemas/User'
  *          404:
  *              description: user was not found
- *          
+ *
  */
 usersRouter.get('/:id', async (req, res) => {
-    const userId= req.params.id.toString()
-    const user = await User.findById({_id:userId})
-    if(user){
-        res.status(200).json(user)
-    }else{
-        res.status(404).end()
-    }
-})
-
+  const userId = req.params.id.toString();
+  const user = await User.findById({ _id: userId });
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).end();
+  }
+});
 
 // usersRouter.delete('/:id',async (req,res) => {
 //     //See wether the user with this ID exists or not
@@ -163,7 +161,6 @@ usersRouter.get('/:id', async (req, res) => {
 
 //     res.status(204).json({"error":"Delete Failed"})
 // })
-
 
 /**
  * @swagger
@@ -190,7 +187,7 @@ usersRouter.get('/:id', async (req, res) => {
  *                                  description: new name of user if he wants to update it
  *                              image:
  *                                  type: string
- *                                  description: image string as filebas64 with datatype and image extension
+ *                                  description: image string as filebase64
  *      responses:
  *          200:
  *              description: content was updated succefullly
@@ -208,20 +205,23 @@ usersRouter.get('/:id', async (req, res) => {
  *                      example:
  *                          {"error":"Invalid Token"}
  */
-usersRouter.put('/:id', Authenticate , async (req, res) => {
-    const userId= res.locals.user.toString()
-    const body = req.body
-    const user = await User.findById({_id:userId})
+usersRouter.put('/:id', Authenticate, async (req, res) => {
+  const userId = res.locals.user.toString();
+  const { body } = req;
+  const user = await User.findById({ _id: userId });
 
-    body.name?user.name=body.name:null
-    body.image?user.image=body.image:null
+  if (body.name) {
+    user.name = body.name;
+  }
 
-    await user.save()
+  if (body.image) {
+    user.image = body.image;
+  }
 
-    res.status(200).json(user)
+  await user.save();
 
-})
-
+  res.status(200).json(user);
+});
 
 /**
  * @swagger
@@ -265,51 +265,52 @@ usersRouter.put('/:id', Authenticate , async (req, res) => {
  *                      schema:
  *                          type: object
  *                          properties:
- *                              error: 
+ *                              error:
  *                                  type: string
- *                                  description: error for duplicated username 
+ *                                  description: error for duplicated username
  *                      example:
  *                          { "error": "E11000 duplicate key error collection: drawing-app.users index: username_1 dup key: { username: \"testuser222\" }" }
  *          403:
- *              description: Invalid password 
+ *              description: Invalid password
  *              content:
  *                  application/json:
  *                      schema:
  *                          type: object
  *                          properties:
- *                              error: 
+ *                              error:
  *                                  type: string
  *                      example: {"error":"Password is less than 3 characters"}
- *                          
- *                      
- *      
+ *
+ *
+ *
  */
-usersRouter.post('/',async (req,res) => {
-    // Get information and make a model to save in the database as a user
-    
-    const {username,name,pass} = req.body
+// eslint-disable-next-line consistent-return
+usersRouter.post('/', async (req, res) => {
+  // Get information and make a model to save in the database as a user
 
-    //Hash the password using bcrypt
-    const saltNmber=10
-    if(pass.length <= 3){
-        return res.status(403).json({error:"Password is less than 3 characters"}).end()
-    }
-    const password= await bcrypt.hash(pass,saltNmber)
+  const { username, name, pass } = req.body;
 
-    //Make an obejct of the User model
-    const user = new User({
-       username,
-       password,
-       name
-    })
+  // Hash the password using bcrypt
+  const saltNmber = 10;
+  if (pass.length <= 3) {
+    return res.status(403).json({ error: 'Password is less than 3 characters' }).end();
+  }
+  const password = await bcrypt.hash(pass, saltNmber);
 
-    //Wait for the saved user
+  // Make an obejct of the User model
+  const user = new User({
+    username,
+    password,
+    name,
+  });
 
-    const savedUser = await user.save()
+  // Wait for the saved user
 
-    //return the saved uer as json
+  const savedUser = await user.save();
 
-    res.json(savedUser)
-})
+  // return the saved uer as json
 
-module.exports = usersRouter
+  res.json(savedUser);
+});
+
+module.exports = usersRouter;
