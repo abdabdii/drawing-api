@@ -1,5 +1,6 @@
+[![Testing Actions Status](https://github.com/abdabdii/drawing-api/workflows/Testing/badge.svg)](https://github.com/abdabdii/drawing-api/actions)
+
 # Drawing Api
-[![Actions Status](https://github.com/{abdabdii}/{drawing-api}/workflows/{Build}/badge.svg)](https://github.com/{abdabdii}/{drawing-api}/actions)
 
 This project was made for mintbean hackathon for Jr developers Check them out:
 
@@ -26,6 +27,7 @@ Then to generate a pair of public and private key
 
 Make .env file that contains
 - MONGODB_URI=(Whatever your mongodb URI is)
+- TEST_MONGODB_URI=(Mongodb URI for testing)
 - PORT=
 
 Start nodemon server:
