@@ -52,6 +52,7 @@ drawingRouter.put('/:id', Authenticate, async (request, response) => {
   const drawing = await Drawing.findById({ _id: drawingId });
   const user = await User.findById({ _id: userId });
   const isOwner = drawing.user.equals(user._id);
+
   const { body } = request;
 
   if (user && drawing) {
@@ -75,11 +76,10 @@ drawingRouter.put('/:id', Authenticate, async (request, response) => {
       const newDrawing = await drawing.save();
       response.status(200).json(newDrawing);
     }
-  } else {
-    response.status(401).json({
-      error: 'token missing or invalid',
-    });
   }
+  response.status(401).json({
+    error: 'token missing or invalid',
+  });
 });
 
 drawingRouter.post('/', Authenticate, async (request, response) => {

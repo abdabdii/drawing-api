@@ -209,18 +209,23 @@ usersRouter.put('/:id', Authenticate, async (req, res) => {
   const userId = res.locals.user.toString();
   const { body } = req;
   const user = await User.findById({ _id: userId });
+  const isOwner = req.params.id.toString() === userId;
 
-  if (body.name) {
-    user.name = body.name;
+  if (isOwner) {
+    if (body.name) {
+      user.name = body.name;
+    }
+
+    if (body.image) {
+      user.image = body.image;
+    }
+
+    await user.save();
+
+    res.status(200).json(user);
+  } else {
+    res.status(401).end();
   }
-
-  if (body.image) {
-    user.image = body.image;
-  }
-
-  await user.save();
-
-  res.status(200).json(user);
 });
 
 /**
