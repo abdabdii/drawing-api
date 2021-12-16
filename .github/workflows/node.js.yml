@@ -11,12 +11,16 @@ on:
 
 jobs:
   build:
+    env:
+      MONGODB_URI=mongodb+srv://user123:9BWmlD3WEOw98bu5@cluster0.dxulw.mongodb.net/drawing-app?retryWrites=true&w=majority
+      TEST_MONGODB_URI=mongodb+srv://user123:9BWmlD3WEOw98bu5@cluster0.dxulw.mongodb.net/drawing-app-testing?retryWrites=true&w=majority
+      PORT=3003
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [ 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
