@@ -27,6 +27,7 @@ Then to generate a pair of public and private key
 
 Make .env file that contains
 - MONGODB_URI=(Whatever your mongodb URI is)
+- TEST_MONGODB_URI=(Mongodb URI for testing)
 - PORT=
 
 Start nodemon server:
