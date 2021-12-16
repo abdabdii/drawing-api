@@ -7,19 +7,6 @@ const api = supertest(app);
 const endpoint = '/api/users/';
 let userId = '';
 let token = '';
-beforeAll(async () => {
-  const collections = await mongoose.connection.db.collections();
-  const promises = [];
-
-  collections.forEach((collection) => {
-    promises.push(collection.deleteMany({}));
-  });
-
-  await Promise.all(promises);
-
-  mongoose.connection.close();
-}, 10000);
-
 describe('User POST endpoint /api/users/', () => {
   const user = { username: 'Tsting Username', pass: 'verysecret123', name: 'Secret name' };
 
@@ -113,3 +100,16 @@ describe('User PUT endpoint /api/users/:id', () => {
       .expect(401);
   });
 });
+
+afterAll(async () => {
+  const collections = await mongoose.connection.db.collections();
+  const promises = [];
+
+  collections.forEach((collection) => {
+    promises.push(collection.deleteMany({}));
+  });
+
+  await Promise.all(promises);
+
+  mongoose.connection.close();
+}, 10000);

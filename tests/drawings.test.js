@@ -10,18 +10,6 @@ let token = '';
 let token2 = '';
 let drawingId = '';
 const endpoint = '/api/drawings/';
-beforeAll(async () => {
-  const collections = await mongoose.connection.db.collections();
-  const promises = [];
-
-  collections.forEach((collection) => {
-    promises.push(collection.deleteMany({}));
-  });
-
-  await Promise.all(promises);
-
-  mongoose.connection.close();
-}, 10000);
 
 describe('Drawings POST to create new drawing /api/drawings', () => {
   test('Create new users and login', async () => {
@@ -135,4 +123,17 @@ describe('Drawings DELETE endpoint /api/drawings/:id', () => {
       .set('Authorization', `Bearer ${token}`)
       .expect(204);
   });
+}, 10000);
+
+afterAll(async () => {
+  const collections = await mongoose.connection.db.collections();
+  const promises = [];
+
+  collections.forEach((collection) => {
+    promises.push(collection.deleteMany({}));
+  });
+
+  await Promise.all(promises);
+
+  mongoose.connection.close();
 }, 10000);

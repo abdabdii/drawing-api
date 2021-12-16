@@ -5,18 +5,6 @@ const app = require('../app');
 
 const api = supertest(app);
 const endpoint = '/api/login/';
-beforeAll(async () => {
-  const collections = await mongoose.connection.db.collections();
-  const promises = [];
-
-  collections.forEach((collection) => {
-    promises.push(collection.deleteMany({}));
-  });
-
-  await Promise.all(promises);
-
-  mongoose.connection.close();
-}, 10000);
 
 describe('Testiing Login endpoint /api/login', () => {
   const user = { username: 'potato', password: 'verysecret123', name: 'Secret Name' };
@@ -51,3 +39,16 @@ describe('Testiing Login endpoint /api/login', () => {
       .expect((res) => res.body.token.length > 64);
   });
 });
+
+afterAll(async () => {
+  const collections = await mongoose.connection.db.collections();
+  const promises = [];
+
+  collections.forEach((collection) => {
+    promises.push(collection.deleteMany({}));
+  });
+
+  await Promise.all(promises);
+
+  mongoose.connection.close();
+}, 10000);
