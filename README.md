@@ -1,5 +1,5 @@
 # Drawing Api
-[![YourActionName Actions Status](https://github.com/{abdabdii}/{drawing-api}/workflows/{Node.js%20CI}/badge.svg)](https://github.com/{abdabdii}/{drawing-api}/actions)
+[![Actions Status](https://github.com/{abdabdii}/{drawing-api}/workflows/{Node.js%20CI}/badge.svg)](https://github.com/{abdabdii}/{drawing-api}/actions)
 
 This project was made for mintbean hackathon for Jr developers Check them out:
 
